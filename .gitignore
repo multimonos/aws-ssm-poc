@@ -1,0 +1,8 @@
+.env
+dist/
+venv/
+res.json
+.swp
+__pycache__/
+.pytest_cache/
+.DS_Store
