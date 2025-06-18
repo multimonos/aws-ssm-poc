@@ -1,12 +1,11 @@
+import os
 import json
 import boto3
-import logging
 
 
-# warm init
+ENV = os.environ.get("ENVIRONMENT")
+
 ssm = boto3.client("ssm", region_name="us-east-2")
-logger = logging.getLogger()
-logger.setLevel(logging.INFO)  # or DEBUG, WARNING, ERROR
 
 
 # helpers
@@ -55,6 +54,9 @@ def get_all_hosts(ssm, env: str, business: str) -> list[str]:
 
 
 def lambda_handler(event, context):
+    if not ENV:
+        return err_response(500, "Missing required environment.")
+
     # payload
     business = event.get("business")
     store = event.get("store")
@@ -69,9 +71,9 @@ def lambda_handler(event, context):
     # get param
     try:
         if store == "*":
-            value = get_all_hosts(ssm, "dev", business)
+            value = get_all_hosts(ssm, ENV, business)
         else:
-            value = get_store_host(ssm, "dev", business, store)
+            value = get_store_host(ssm, ENV, business, store)
 
         return {
             "statusCode": 200,
