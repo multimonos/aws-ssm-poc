@@ -34,13 +34,13 @@ dev-deploy:
 	make prepare \
 	&& aws lambda update-function-code --function-name $(DEV_FN) --zip-file fileb://$(target) --no-cli-pager \
 	&& sleep 5 \
-	&& aws lambda update-function-configuration --function-name $(DEV_FN) --environment Variables='{ENV=dev}' 
+	&& aws lambda update-function-configuration --function-name $(DEV_FN) --environment Variables='{ENVIRONMENT=dev}' 
 
 prd-deploy:
 	make prepare \
 	&& aws lambda update-function-code --function-name $(PRD_FN) --zip-file fileb://$(target) --no-cli-pager \
 	&& sleep 5 \
-	&& aws lambda update-function-configuration --function-name $(PRD_FN) --environment Variables='{ENV=prd}'
+	&& aws lambda update-function-configuration --function-name $(PRD_FN) --environment Variables='{ENVIRONMENT=prd}'
 
 
 
