@@ -1,4 +1,4 @@
-.PHONY: default setup test
+.PHONY: default test
 
 include .env
 export 
@@ -40,7 +40,7 @@ prd-deploy:
 	make prepare \
 	&& aws lambda update-function-code --function-name $(PRD_FN) --zip-file fileb://$(target) --no-cli-pager \
 	&& sleep 5 \
-	&& aws lambda update-function-configuration --function-name $(PRD_FN) --environment Variables='{ENVIRONMENT=prd}'
+	&& aws lambda update-function-configuration --function-name $(PRD_FN) --environment Variables='{ENVIRONMEN=prd}'
 
 
 
